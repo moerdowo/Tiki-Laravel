@@ -29,8 +29,7 @@ class Tiki {
     }
 
     function getCost($from, $to,$weight){
-
-        // mengambil data awal tiki online, gunanya untuk mengambil cookie di header page si TIKI          
+       
         $url_1 = $this->url;
         $c = curl_init();
         curl_setopt($c, CURLOPT_AUTOREFERER, 1);
@@ -44,25 +43,17 @@ class Tiki {
         $hasil_1 = curl_exec($c);
         curl_close($c);
 
-        // echo $hasil_1;
-        // proses ngambil cookie si tiki dari hasil curl hasil_1;
         $cookie = $this->CariKata($hasil_1,'PHPSESSID=',';');
-        // echo $cookie;
 
-        // data yg dipost tiki, kenapa empat data ? 
-        // dan dari mana kita tahu kalau si TIKI ada 4 variable. Cek di firebug, buat tab NETnya
         $postdata = array(
           "get_des" => $from,
           "get_ori" => $to,
           "get_wg" => $weight,
           "submit" => "Check"
         );
-        // get_des, get_ori ini masih hardcode, belum ada pengecekan kota yang tersedia di TIKI, jadi seharusnya ada proses pengecekan kota sih.
 
+        $url_2 = $this->url2;
 
-        $url_2 = $this->url2; // url ini selalu statik, tapi mungkin berubah, jadi mesti dihandel.
-
-        // curl untuk cek harga tiki.
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_URL, $url_2);
@@ -99,9 +90,7 @@ class Tiki {
             return null;
         }
 
-        //echo $hasil_2;
-
-        // tinggal pecah2 data dari hasil_2 html untuk mengambil harga.
+       
     }
 
 }
