@@ -73,13 +73,16 @@ class Tiki {
 
         if (preg_match_all('#<td>([^<]*)</td>#Usi', $hasil_2, $matches)) {
             $awal =  $matches[0];
+            $exclude = array('<td>', '</td>');
+            $awal = str_ireplace($exclude, '', $awal);
             array_shift($awal);
             //return $awal;
 
             $arraykirim = array();
 
             for($i=0;$i<count($awal);$i+=2){
-                $xzr = array("layanan"=>$awal[$i],"harga"=>$awal[$i+1]);
+                $price = preg_replace("/([^0-9\\.])/i", "", $awal[$i+1]);
+                $xzr = array("layanan"=>$awal[$i],"harga"=>$price);
                 array_push($arraykirim, $xzr);
             }
 
